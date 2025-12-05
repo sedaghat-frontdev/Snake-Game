@@ -1,0 +1,221 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+@font-face {
+  font-family: pixel;
+  src: url(txtFonts/PixelifySans-Medium.ttf);
+}
+
+body {
+  background: #222;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 200vh;
+}
+
+/* امتیاز بالا */
+#scoreBox {
+  width: 100%;
+  color: white;
+  font-size: 30px;
+  font-weight: bold;
+  display: flex;
+  justify-content: space-around;
+  padding: 20px 0;
+  font-family: sans-serif;
+}
+
+:root {
+  --tile: 40px;
+}
+
+#game {
+  width: 70vw;
+  height: 90vh;
+  position: relative;
+  overflow: hidden;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, var(--tile));
+  grid-auto-rows: var(--tile);
+}
+
+.tile {
+  width: var(--tile);
+  height: var(--tile);
+}
+
+/* شطرنجی واقعی */
+.light {
+  background: #b1f0a9;
+}
+
+.dark {
+  background: #9bdc93;
+}
+
+/* بدن مار */
+.snake-body {
+  position: absolute;
+  width: var(--tile);
+  height: var(--tile);
+  background: #1b8a2f;
+  border-radius: 8px;
+  transition: 0.1s linear;
+}
+
+/* سر مار */
+.snake-head {
+  position: absolute;
+  width: var(--tile);
+  height: var(--tile);
+  background-image: url("../img/head.png");
+  background-size: cover;
+  transition: transform 0.1s linear;
+}
+
+/* میوه */
+.food {
+  position: absolute;
+  width: var(--tile);
+  height: var(--tile);
+  background-image: url("../img/apple.png");
+  background-size: cover;
+}
+
+
+.footer {
+  width: 100%;
+  height: 100vh;
+  background-color: #c8f3d0;
+
+  >div {
+    width: 100%;
+
+    &:nth-of-type(1) {
+      height: 40vh;
+      /* background-color: red; */
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      >figure {
+        width: 320px;
+        height: 300px;
+        background-color: whitesmoke;
+        border-radius: 50px;
+        border: 5px solid green;
+        overflow: hidden;
+        >img{
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+        }
+      }
+
+    }
+
+
+    &:nth-of-type(2) {
+      height: 20vh;
+      /* background-color: blue; */
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 50px;
+
+      >div {
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        background-color: rgb(186, 0, 0);
+        border: 5px solid green;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: .4s;
+
+        &:hover {
+          background-color: white;
+
+          >a {
+            >i {
+              color: rgb(186, 0, 0);
+            }
+          }
+        }
+
+        >a {
+          width: 100%;
+          height: 100%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          transition: .4s;
+          text-decoration: none;
+
+          >i {
+            transition: .4s;
+            font-size: 50px;
+            color: white;
+
+          }
+        }
+
+      }
+    }
+
+    &:nth-of-type(3) {
+      height: 40vh;
+      border-top: 3px solid #1b8a2f;
+      background-color: rgb(120, 242, 120);
+      &:hover{
+        >div{
+        &:nth-of-type(1){
+           >h1{
+          margin-right: 50%;
+         }
+        }
+         &:nth-of-type(2){
+          >h1{
+            margin-left: 50%;
+          }
+         }
+         &:nth-of-type(3){
+          >h1{
+            margin-right: 50%;
+          }
+         }
+        }
+      }
+      >div{
+        /* border: 2px solid red; */
+        width: 100%;
+        height: 33.33%;
+        display: flex;
+        align-items: center;
+        justify-content: end;
+        >h1{
+          transition: 1s;
+          width: 30%;
+          height: 90%;
+          background-color: green;
+          color: white;
+          border-radius: 20px;
+          border: 3px solid #ba0000;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          text-align: center;
+          font-family: pixel;
+          font-size: 40px;
+        }
+        &:nth-of-type(2){
+          justify-content: start;
+        }
+      }
+    }
+  }
+}

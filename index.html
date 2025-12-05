@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Snake Game</title>
+  <link rel="stylesheet" href="style/css/master.css">
+  <link rel="stylesheet" href="style/css/FontIcons/remixicon.css">
+</head>
+
+<body>
+
+  <!-- امتیاز و رکورد -->
+  <div id="scoreBox">
+    <span>Score: <b id="score">0</b></span>
+    <span>Best: <b id="best">0</b></span>
+  </div>
+
+  <!-- صفحه بازی -->
+  <div id="game"></div>
+
+  <div class="footer">
+    <div><figure><img src="style/img/me.jpg" alt=""></figure></div>
+    <div>
+      <div><a href="https://github.com/sedaghat-frontdev"><i class="ri-github-line"></i></a></div>
+      <div><a href="https://www.instagram.com/sedaghat-frontdev/"><i class="ri-instagram-line"></i></a></div>
+      <div><a href="mailto:rezzasedaghat@gmail.com"><i class="ri-mail-line"></i></a></div>
+    </div>
+    <div>
+      <div><h1>MohammadReza Sedaghat</h1></div>
+      <div><h1>Sedaghat-FrontDev</h1></div>
+      <div><h1>Hope you`ve enjoyed !</h1></div>
+    </div>
+  </div>
+
+  <script>
+    const game = document.getElementById("game");
+    const tile = 40;
+    let gw, gh;
+
+    function updateSize() {
+      gw = Math.floor(game.clientWidth / tile);
+      gh = Math.floor(game.clientHeight / tile);
+    }
+    updateSize();
+
+    // رسم صفحه شطرنجی
+    function drawBoard() {
+      for (let r = 0; r < gh; r++) {
+        for (let c = 0; c < gw; c++) {
+          const t = document.createElement("div");
+          t.classList.add("tile");
+
+          if ((r + c) % 2 === 0) t.classList.add("light");
+          else t.classList.add("dark");
+
+          game.appendChild(t);
+        }
+      }
+    }
+    drawBoard();
+
+    // --------------------- GAME VARS ------------------------
+    let snake = [];
+    let dir = null;
+    let food = null;
+    let interval = null;
+
+    let score = 0;
+    let best = Number(localStorage.getItem("bestScore")) || 0;
+
+    document.getElementById("best").innerText = best;
+
+    function randPos() {
+      return {
+        x: Math.floor(Math.random() * gw),
+        y: Math.floor(Math.random() * gh)
+      };
+    }
+
+    function genFood() {
+      let p = randPos();
+      while (snake.some(s => s.x === p.x && s.y === p.y)) {
+        p = randPos();
+      }
+      return p;
+    }
+
+    function resetGame(showAlert = false) {
+      if (showAlert) alert("GAME OVER");
+
+      [...document.querySelectorAll(".snake-body, .snake-head, .food")].forEach(e => e.remove());
+
+      snake = [randPos()];
+      dir = null;
+      food = genFood();
+
+      score = 0;
+      document.getElementById("score").innerText = score;
+
+      clearInterval(interval);
+      interval = null;
+
+      render();
+    }
+
+    // ----------------------- RENDER ------------------------
+    function render() {
+      [...document.querySelectorAll(".snake-body, .snake-head, .food")].forEach(e => e.remove());
+
+      // غذا
+      const f = document.createElement("div");
+      f.className = "food";
+      f.style.left = food.x * tile + "px";
+      f.style.top = food.y * tile + "px";
+      game.appendChild(f);
+
+      // سر مار
+      const head = document.createElement("div");
+      head.className = "snake-head";
+      head.style.left = snake[0].x * tile + "px";
+      head.style.top = snake[0].y * tile + "px";
+
+      if (dir === "down") head.style.transform = "rotate(0deg)";
+      if (dir === "up") head.style.transform = "rotate(180deg)";
+      if (dir === "right") head.style.transform = "rotate(-90deg)";
+      if (dir === "left") head.style.transform = "rotate(90deg)";
+
+      game.appendChild(head);
+
+      // بدن مار
+      for (let i = 1; i < snake.length; i++) {
+        const b = document.createElement("div");
+        b.className = "snake-body";
+        b.style.left = snake[i].x * tile + "px";
+        b.style.top = snake[i].y * tile + "px";
+        game.appendChild(b);
+      }
+    }
+
+    // ------------------------ MOVE -------------------------
+    function move() {
+      if (!dir) return;
+
+      const head = { ...snake[0] };
+
+      if (dir === "left") head.x--;
+      if (dir === "right") head.x++;
+      if (dir === "up") head.y--;
+      if (dir === "down") head.y++;
+
+      // برخورد با دیوار یا خودش
+      if (
+        head.x < 0 || head.x >= gw ||
+        head.y < 0 || head.y >= gh ||
+        snake.some(s => s.x === head.x && s.y === head.y)
+      ) {
+        resetGame(true);
+        return;
+      }
+
+      snake.unshift(head);
+
+      // خوردن غذا
+      if (head.x === food.x && head.y === food.y) {
+        score++;
+        document.getElementById("score").innerText = score;
+
+        if (score > best) {
+          best = score;
+          localStorage.setItem("bestScore", best);
+          document.getElementById("best").innerText = best;
+        }
+
+        food = genFood();
+      } else {
+        snake.pop();
+      }
+
+      render();
+    }
+
+    // -------------------- KEYBOARD CONTROL --------------------
+    document.addEventListener("keydown", (e) => {
+
+      // جلوگیری از اسکرول با کلیدهای جهت
+      if (["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"].includes(e.key)) {
+        e.preventDefault();
+      }
+
+      if (e.key === "ArrowLeft" && dir !== "right") dir = "left";
+      if (e.key === "ArrowRight" && dir !== "left") dir = "right";
+      if (e.key === "ArrowUp" && dir !== "down") dir = "up";
+      if (e.key === "ArrowDown" && dir !== "up") dir = "down";
+
+      if (!interval) interval = setInterval(move, 200);
+    });
+
+    resetGame();
+  </script>
+
+</body>
+</html>
