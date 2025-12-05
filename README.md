@@ -7,17 +7,11 @@
 
 A Snake Game project using HTML and CSS3 and JavaScript! .
 
-<img width="1906" height="960" alt="Image" src="https://github.com/user-attachments/assets/1de81c49-33ec-475f-bff8-bab68ab36b9b" />
+<img width="1918" height="968" alt="Image" src="https://github.com/user-attachments/assets/067b942e-7df3-406c-ad75-182711b43763" />
 <br/>
-<img width="1906" height="960" alt="Image" src="https://github.com/user-attachments/assets/47589733-dd92-4545-b6f3-700e8a9415ed" />
+<img width="1918" height="968" alt="Image" src="https://github.com/user-attachments/assets/3022034f-1ba7-4220-9888-4806c64e5b42" />
 <br/>
-<img width="1907" height="960" alt="Image" src="https://github.com/user-attachments/assets/34b14aac-183b-4930-b989-d3637b824066" />
-<br/>
-<img width="1907" height="970" alt="Image" src="https://github.com/user-attachments/assets/49159d2f-64ed-4429-858e-5367576bc7e9" />
-<br/>
-<img width="1906" height="971" alt="Image" src="https://github.com/user-attachments/assets/d4b2467b-2359-411a-9a6b-55fbc1b733e9" />
-<br/>
-<img width="1907" height="971" alt="Image" src="https://github.com/user-attachments/assets/6c53b855-3391-4fc4-9fc0-62f1cbfca480" />
+<img width="1918" height="908" alt="Image" src="https://github.com/user-attachments/assets/d7c29f7d-140d-4ffd-95d3-a4d330054bc9" />
 <br/>
 <br/>
 <p align="center">
